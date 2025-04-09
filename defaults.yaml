@@ -1,0 +1,4 @@
+helmDefaults:
+  kubeContext: admin@talos-cluster
+  createNamespace: false
+

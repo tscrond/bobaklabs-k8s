@@ -1,0 +1,3 @@
+#base/values/metallb.yaml
+ipRange:
+  - "192.168.1.140-192.168.1.200"

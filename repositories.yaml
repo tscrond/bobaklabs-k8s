@@ -1,0 +1,6 @@
+# repositories.yaml
+repositories:
+  - name: frr-k8s
+    url: https://metallb.github.io/frr-k8s
+  - name: metallb
+    url: https://metallb.github.io/metallb
