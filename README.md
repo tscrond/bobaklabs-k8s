@@ -25,7 +25,7 @@ The cluster needs:
 
 For this cluster i used Talos Linux instances on Proxmox - below you will find some commands that were helpful for creating the cluster.
 
-FYI: i followed an official Talos cluster installation guide for [nocloud distributions](https://www.talos.dev/v1.9/talos-guides/install/cloud-platforms/nocloud/).
+FYI: i followed an official Talos cluster installation guide for []() and [nocloud distributions](https://www.talos.dev/v1.9/talos-guides/install/cloud-platforms/nocloud/).
 
 To create the VMs i used my [cloudinit script](https://raw.githubusercontent.com/tscrond/k3s-lab-toolkit/refs/heads/main/proxmox-scripts/new_vm_cloudinit.sh) from [k3s-lab-toolkit](https://github.com/tscrond/k3s-lab-toolkit).
 
@@ -35,4 +35,7 @@ talosctl gen config talos-cluster https://<control_plane_node_ip>:6443 --output-
 talosctl get disks --insecure --nodes <control_plane_node_ip> 
 talosctl apply-config --insecure --nodes <control_plane_node_ip> --file _out/controlplane.yaml
 talosctl apply-config --insecure --nodes <worker_node_ip> --file _out/worker.yaml
+
+talosctl bootstrap
+talosctl kubeconfig . #<- upload kubeconfig file to the main directory of this repo
 ```

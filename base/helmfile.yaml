@@ -9,7 +9,6 @@ releases:
   ### kubectl label namespace metallb-system "pod-security.kubernetes.io/enforce=privileged" "pod-security.kubernetes.io/enforce-version=latest" --overwrite
   - name: metallb
     namespace: metallb-system
-    createNamespace: false
     chart: metallb/metallb
     version: 0.14.9
     values:
@@ -17,10 +16,17 @@ releases:
 
   - name: metallb-config
     namespace: metallb-system
-    createNamespace: false
     chart: ../charts/metallb
     values:
       - ./values/metallb-config.yaml
+  
+  - name: longhorn-ns
+    namespace: default
+    chart: ../charts/longhorn-ns
+
+  - name: longhorn
+    namespace: longhorn-system
+    chart: longhorn/longhorn
 
   - name: test-app
     namespace: default
