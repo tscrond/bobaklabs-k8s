@@ -1,2 +1,4 @@
 #charts/metallb/values.yaml
-ipRange: []
+pools:
+  - name: "default-pool"
+    ipRange: []

@@ -4,6 +4,8 @@ metadata:
   name: {{ .Chart.Name }}
   labels:
     app: {{ .Chart.Name }}
+  annotations:
+    metallb.io/address-pool: {{ .Values.ipAddressPoolName }}
 spec:
   type: {{ .Values.service.type }}
   selector:

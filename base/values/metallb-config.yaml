@@ -1,3 +1,11 @@
 #base/values/metallb.yaml
-ipRange:
-  - "192.168.1.140-192.168.1.200"
+pools:
+  - name: "default-pool"
+    ipRange:
+      - "192.168.1.141-192.168.1.200"
+  - name: "traefik-pool"
+    ipRange:
+      - "192.168.1.140/32"
+  - name: "haproxy-pool"
+    ipRange:
+      - "192.168.1.139/32"

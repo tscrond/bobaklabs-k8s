@@ -1,0 +1,14 @@
+#charts/metallb/templates/l2advertisement.yaml
+{{- range .Values.pools }}
+---
+apiVersion: metallb.io/v1beta1
+kind: IPAddressPool
+metadata:
+  name: {{ .name }}
+  namespace: metallb-system
+spec:
+  addresses:
+{{- range .ipRange }}
+    - {{ . }}
+{{- end }}
+{{- end }}

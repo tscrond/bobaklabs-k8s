@@ -8,3 +8,5 @@ image:
 service:
   type: LoadBalancer
   port: 80
+
+ipAddressPoolName: default-pool

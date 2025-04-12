@@ -4,5 +4,17 @@ repositories:
     url: https://charts.longhorn.io
   - name: metallb
     url: https://metallb.github.io/metallb
+  - name: prometheus-community
+    url: https://prometheus-community.github.io/helm-charts
+  - name: grafana-charts
+    url: https://grafana.github.io/helm-charts
   - name: kube-prometheus-stack
     url: https://prometheus-community.github.io/helm-charts
+  - name: jetstack
+    url: https://charts.jetstack.io
+  - name: haproxytech
+    url: https://haproxytech.github.io/helm-charts
+  - name: traefik
+    url: https://traefik.github.io/charts
+  - name: sealed-secrets
+    url: https://bitnami-labs.github.io/sealed-secrets

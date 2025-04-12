@@ -20,3 +20,10 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - containerPort: 80
+          volumeMounts:
+            - mountPath: /data
+              name: test-app-pvc
+      volumes:
+        - name: test-app-pvc
+          persistentVolumeClaim:
+            claimName: test-app-pvc
