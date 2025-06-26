@@ -1,4 +1,3 @@
-# helmfile.yaml
 bases:
   - ../defaults.yaml
   - ../repositories.yaml
@@ -7,9 +6,9 @@ releases:
   ### IMPORTANT: ###
   ### Create namespace metallb-system manually and after that, run:
   ### kubectl label namespace metallb-system "pod-security.kubernetes.io/enforce=privileged" "pod-security.kubernetes.io/enforce-version=latest" --overwrite
-  - name: metallb-ns
+  - name: namespaces
     namespace: default
-    chart: ../charts/metallb-ns
+    chart: ./namespaces
 
   - name: metallb
     namespace: metallb-system
@@ -24,20 +23,6 @@ releases:
     values:
       - ./values/metallb-config.yaml
 
-  - name: haproxy-ingress
-    namespace: haproxy
-    chart: haproxytech/kubernetes-ingress
-    version: 1.44.2
-    values:
-      - ./values/haproxy.yaml
-
-  - name: traefik
-    namespace: traefik
-    chart: traefik/traefik
-    version: 35.0.0
-    values:
-      - ./values/traefik.yaml
-
   - name: cert-manager
     namespace: cert-manager
     chart: jetstack/cert-manager
@@ -46,32 +31,36 @@ releases:
       - installCRDs: true
       - enableCertificateOwnerRef: true
 
+  - name: traefik-v3
+    namespace: traefik
+    chart: traefik/traefik
+    version: 36.2.0
+    set:
+      - name: service.spec.loadBalancerIP
+        value: "192.168.1.140"
+      - name: service.spec.annotations.metallb\.io/address-pool
+        value: "traefik-pool-1"
+    values:
+      - ./values/traefik.yaml
+  
+  - name: certificates
+    namespace: default
+    chart: ../charts/certificates
+    values:
+      - ./values/certificates.yaml
+
   - name: sealed-secrets
     namespace: kube-system
     chart: sealed-secrets/sealed-secrets
     version: 2.17.2
+    set:
+      - name: fullnameOverride
+        value: sealed-secrets-controller
 
-  - name: longhorn-ns
+  - name: secrets
     namespace: default
-    chart: ../charts/longhorn-ns
+    chart: ./secrets
 
   - name: longhorn
     namespace: longhorn-system
     chart: longhorn/longhorn
-
-  - name: kube-prometheus-stack
-    namespace: monitoring
-    chart: prometheus-community/kube-prometheus-stack
-    version: 70.4.2
-    timeout: 600
-
-  - name: test-app
-    namespace: default
-    chart: ../charts/test-app
-    values:
-      - image:
-          tag: "1.25.3"
-        service:
-          type: LoadBalancer
-          port: 80
-

@@ -1,0 +1,4 @@
+email: "bobak.labs@gmail.com"
+secret:
+  name: cloudflare-api-token-secret
+  key: api-token

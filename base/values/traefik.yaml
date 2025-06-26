@@ -1,3 +1,49 @@
+deployment:
+  enabled: true
+  kind: DaemonSet
+  healthchecksPort: 8000
+
 service:
-  annotations:
-    metallb.io/address-pool: "traefik-pool" 
+  type: LoadBalancer
+  single: false
+  spec:
+    externalTrafficPolicy: Local
+    loadBalancerIP: __change_me__
+
+
+additionalArguments:
+  - --api.insecure=true
+  - --ping.entrypoint=web
+
+metrics:
+  prometheus:
+    service:
+      enabled: true
+    serviceMonitor:
+      enabled: true
+
+logs:
+  general:
+    level: DEBUG
+  access:
+    enabled: true
+    format: json
+    fields:
+      general:
+        defaultmode: keep
+      headers:
+        defaultmode: keep
+
+providers:
+  kubernetesCRD:
+    allowCrossNamespace: true
+
+ingressRoute:
+  dashboard:
+    enabled: true
+
+entryPoints:
+  web:
+    address: ":80"
+  websecure:
+    address: ":443"

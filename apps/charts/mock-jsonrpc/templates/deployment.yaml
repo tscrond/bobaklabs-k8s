@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jsonrpc-mock
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: jsonrpc-mock
+  template:
+    metadata:
+      labels:
+        app: jsonrpc-mock
+    spec:
+      containers:
+      - name: jsonrpc-mock
+        image: bobaklabs/jsonrpc-mock:latest
+        ports:
+        - containerPort: 8545

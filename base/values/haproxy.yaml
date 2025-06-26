@@ -1,5 +1,0 @@
-controller:
-  service:
-    annotations:
-      metallb.io/address-pool: "haproxy-pool"
-    type: LoadBalancer

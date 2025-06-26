@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "this.name" . }}
+  labels:
+    {{- include "this.labels" . | nindent 4 }}
+    custom: "example"
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      {{- include "this.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "this.selectorLabels" . | nindent 8 }}
+        custom: "example"
+    spec:
+      serviceAccountName: {{ include "this.name" . }}
+      containers:
+        - name: http-echo
+          image: hashicorp/http-echo:0.2.3
+          imagePullPolicy: IfNotPresent
+          args:
+            - "-text=Hello World"
+          ports:
+            - name: {{ include "this.name" . }}
+              containerPort: 5678
+          # securityContext:
+          #   runAsNonRoot: true
+          #   allowPrivilegeEscalation: false
+          #   capabilities:
+          #     drop:
+          #       - ALL
+            # seccompProfile:
+            #   type: RuntimeDefault

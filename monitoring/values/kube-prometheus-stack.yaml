@@ -1,0 +1,88 @@
+# Setting to true produces cleaner resource names
+cleanPrometheusOperatorObjectNames: true
+
+# --- GKE specific ---
+defaultRules:
+  rules:
+    # Below services are running on control-plane.
+    # They are managed by GKE, so we can't monitor them with Prometheus.
+    kubeControllerManager: true
+    kubeProxy: true
+    kubeSchedulerAlerting: true
+    kubeSchedulerRecording: true
+    etcd: true
+
+kubeControllerManager:
+  enabled: true
+
+kubeProxy:
+  enabled: true
+
+kubeScheduler:
+  enabled: true
+
+kubeEtcd:
+  enabled: true
+
+coreDns:
+  enabled: true
+
+kubelet:
+  serviceMonitor:
+    https: false
+
+
+prometheus:
+  prometheusSpec:
+    resources:
+      requests:
+        cpu: 200m
+        memory: "1.4Gi"
+    # priorityClassName: "critical-0"
+
+    storageSpec:
+      volumeClaimTemplate:
+        spec:
+          storageClassName: longhorn
+          accessModes: ["ReadWriteOnce"]
+          resources:
+            requests:
+              storage: 100Gi
+
+    serviceMonitorSelectorNilUsesHelmValues: false
+
+    serviceMonitorNamespaceSelector:
+      matchLabels:
+        prometheus: enabled
+
+    ruleSelectorNilUsesHelmValues: false
+    ruleNamespaceSelector:
+      matchLabels:
+        kubernetes.io/metadata.name: "monitoring"
+
+    scrapeConfigSelectorNilUsesHelmValues: false
+
+    scrapeConfigSelector: {}
+
+    enableRemoteWriteReceiver: true
+
+    retention: 30d
+
+prometheusOperator:
+  resources:
+    requests:
+      cpu: 100m
+      memory: 100Mi
+
+kube-state-metrics:
+  resources:
+    requests:
+      cpu: 10m
+      memory: 32Mi
+
+prometheus-node-exporter:
+  resources:
+    requests:
+      cpu: 50m
+      memory: 100Mi
+

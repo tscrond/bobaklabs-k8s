@@ -1,0 +1,16 @@
+bases:
+  - ../defaults.yaml
+  - ../repositories.yaml
+
+releases:
+  - name: http-echo
+    namespace: default
+    chart: ../charts/http-echo
+
+  - name: mock-jsonrpc-1
+    namespace: eth
+    chart: ./charts/mock-jsonrpc
+  
+  - name: dshackle-lb
+    namespace: eth
+    chart: ./charts/dshackle-lb

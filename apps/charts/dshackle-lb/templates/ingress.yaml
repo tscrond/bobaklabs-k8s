@@ -1,0 +1,16 @@
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: {{ include "this.name" . }}
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`dshackle-test.traefik.bobaklabs.com`)
+      kind: Rule
+      services:
+        - name: {{ include "this.name" . }}
+          kind: Service
+          port: 8545
+  tls:
+    secretName: dshackle-lb-cert

@@ -1,0 +1,16 @@
+gRPCPort: 2449
+
+# -- HTTP Port
+# @default -- See `values.yaml`
+httpPort: 8545
+
+# -- Metrics Port
+# @default -- See `values.yaml`
+metricsPort: 8081
+
+# -- Health Port
+# @default -- See `values.yaml`
+healthPort: 8082
+
+redisSecretName: "dshackle-redis-secret"
+

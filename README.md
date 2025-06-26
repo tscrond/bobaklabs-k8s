@@ -4,7 +4,7 @@ This repo holds helm/helmfile configuration used in the on-prem kubernetes clust
 
 ## Apps
 
-For now, the cluster is on the experiments phase and hosts metal LB for on prem load balancing and some test apps.
+For now, the cluster is on the experiments phase.
 
 ## The plan
 

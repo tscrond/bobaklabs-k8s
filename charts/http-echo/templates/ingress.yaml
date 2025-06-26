@@ -1,0 +1,20 @@
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: {{ include "this.name" . }}
+  namespace: default
+  labels:
+    {{- include "this.labels" . | nindent 4 }}
+spec:
+  ingressClassName: traefik-v3
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`echo.traefik.bobaklabs.com`)
+      kind: Rule
+      services:
+        - name: {{ include "this.name" . }}
+          port: 5678
+          namespace: default
+  tls:
+    secretName: http-echo-certificate

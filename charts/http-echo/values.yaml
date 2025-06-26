@@ -1,0 +1,8 @@
+image: "hashicorp/http-echo:0.2.3"
+args:
+  - "-text=Hello World"
+port:
+  name: http
+  number: 5678
+labels:
+  custom: "example"

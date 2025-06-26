@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "this.name" . }}
+  labels:
+    {{- include "this.labels" . | nindent 4 }}
+spec:
+  type: ClusterIP
+  selector:
+    {{- include "this.selectorLabels" . | nindent 4 }}
+  ports:
+    - name: {{ include "this.name" . }}
+      targetPort: 5678
+      port: 5678
