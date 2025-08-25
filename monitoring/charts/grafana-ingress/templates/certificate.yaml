@@ -2,11 +2,11 @@ apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
   name: {{ include "this.name" . }}
-  namespace: eth
+  namespace: monitoring
 spec:
+  secretName: {{ include "this.name" . }}
   dnsNames:
-    - dshackle-test.traefik.bobaklabs.com
-  secretName: {{ include "this.name" . }}-cert
+    - grafana.k8s.bobaklabs.com
   issuerRef:
-    name: letsencrypt-prod
     kind: ClusterIssuer
+    name: letsencrypt-prod

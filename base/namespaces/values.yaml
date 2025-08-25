@@ -1,0 +1,9 @@
+namespaces:
+  - longhorn-system
+  - metallb-system
+  - cert-manager
+  - monitoring
+  - traefik
+  - eth
+  - tools
+

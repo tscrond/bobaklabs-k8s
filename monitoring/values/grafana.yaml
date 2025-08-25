@@ -1,0 +1,27 @@
+grafana:
+  enabled: true
+  defaultDashboardsEnabled: true
+  defaultDashboardsTimezone: "Europe/Warsaw"
+
+  resources:
+    requests:
+      cpu: 10m
+      memory: 400Mi
+
+  # Secret containing dashboard credentials
+  admin:
+    ## Name of the secret. Can be templated.
+    existingSecret: "grafana-admin-credentials"
+    userKey: GF_SECURITY_ADMIN_USER
+    passwordKey: GF_SECURITY_ADMIN_PASSWORD
+
+  ingress:
+    enabled: false
+
+  additionalDataSources:
+    - name: Loki
+      type: loki
+      access: proxy
+      url: "http://loki-gateway"
+      jsonData:
+        maxLines: 1000

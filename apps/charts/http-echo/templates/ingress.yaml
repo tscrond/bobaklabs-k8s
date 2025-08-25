@@ -10,7 +10,7 @@ spec:
   entryPoints:
     - websecure
   routes:
-    - match: Host(`echo.traefik.bobaklabs.com`)
+    - match: Host(`echo.k8s.bobaklabs.com`)
       kind: Rule
       services:
         - name: {{ include "this.name" . }}

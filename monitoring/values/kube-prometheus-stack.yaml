@@ -1,11 +1,9 @@
 # Setting to true produces cleaner resource names
 cleanPrometheusOperatorObjectNames: true
 
-# --- GKE specific ---
+
 defaultRules:
   rules:
-    # Below services are running on control-plane.
-    # They are managed by GKE, so we can't monitor them with Prometheus.
     kubeControllerManager: true
     kubeProxy: true
     kubeSchedulerAlerting: true
@@ -14,13 +12,22 @@ defaultRules:
 
 kubeControllerManager:
   enabled: true
+  serviceMonitor:
+    https: true
+    insecureSkipVerify: true
 
 kubeProxy:
   enabled: true
+  serviceMonitor:
+    https: true
+    insecureSkipVerify: true
 
 kubeScheduler:
   enabled: true
-
+  serviceMonitor:
+    https: true
+    insecureSkipVerify: true
+    
 kubeEtcd:
   enabled: true
 
@@ -29,8 +36,8 @@ coreDns:
 
 kubelet:
   serviceMonitor:
-    https: false
-
+    https: true
+    insecureSkipVerify: true
 
 prometheus:
   prometheusSpec:
@@ -46,7 +53,7 @@ prometheus:
           accessModes: ["ReadWriteOnce"]
           resources:
             requests:
-              storage: 100Gi
+              storage: 50Gi
 
     serviceMonitorSelectorNilUsesHelmValues: false
 
@@ -84,4 +91,3 @@ prometheus-node-exporter:
     requests:
       cpu: 50m
       memory: 100Mi
-

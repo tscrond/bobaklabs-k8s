@@ -31,10 +31,17 @@ releases:
       - installCRDs: true
       - enableCertificateOwnerRef: true
 
+  - name: longhorn
+    namespace: longhorn-system
+    chart: longhorn/longhorn
+    version: 1.9.0
+    values:
+      - ./values/longhorn.yaml
+
   - name: traefik-v3
     namespace: traefik
     chart: traefik/traefik
-    version: 36.2.0
+    version: 36.3.0
     set:
       - name: service.spec.loadBalancerIP
         value: "192.168.1.140"
@@ -60,7 +67,3 @@ releases:
   - name: secrets
     namespace: default
     chart: ./secrets
-
-  - name: longhorn
-    namespace: longhorn-system
-    chart: longhorn/longhorn

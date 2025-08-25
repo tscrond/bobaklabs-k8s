@@ -10,3 +10,24 @@ releases:
     timeout: 600
     values:
       - ./values/kube-prometheus-stack.yaml
+      - ./values/grafana.yaml
+
+  - name: grafana-ingress
+    namespace: monitoring
+    chart: ./charts/grafana-ingress
+    
+  - name: loki
+    namespace: monitoring
+    chart: grafana/loki
+    version: 6.30.1
+    installed: false
+    values:
+      - ./values/loki.yaml
+
+  - name: promtail
+    namespace: monitoring
+    chart: grafana/promtail
+    version: 6.17.0
+    installed: false
+    values:
+      - ./values/promtail.yaml

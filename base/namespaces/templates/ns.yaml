@@ -1,7 +1,11 @@
+{{- range .Values.namespaces }}
+---
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: metallb-system
+  name: {{ . }}
+  annotations:
+    helm.sh/resource-policy: keep
   labels:
     pod-security.kubernetes.io/enforce: privileged
     pod-security.kubernetes.io/enforce-version: latest
@@ -9,5 +13,6 @@ metadata:
     pod-security.kubernetes.io/audit-version: latest
     pod-security.kubernetes.io/warn: privileged
     pod-security.kubernetes.io/warn-version: latest
-    {{- include "this.labels" . | nindent 4 }}
     prometheus: enabled
+    {{- include "this.labels" $ | nindent 4 }}
+{{ end -}}

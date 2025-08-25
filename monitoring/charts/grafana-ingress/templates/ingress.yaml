@@ -2,15 +2,16 @@ apiVersion: traefik.io/v1alpha1
 kind: IngressRoute
 metadata:
   name: {{ include "this.name" . }}
+  namespace: monitoring
 spec:
   entryPoints:
     - websecure
   routes:
-    - match: Host(`dshackle-test.traefik.bobaklabs.com`)
+    - match: Host(`grafana.k8s.bobaklabs.com`)
       kind: Rule
       services:
-        - name: {{ include "this.name" . }}
+        - name: kube-prometheus-stack-grafana
           kind: Service
-          port: 8545
+          port: 80
   tls:
-    secretName: dshackle-lb-cert
+    secretName: grafana-ingress

@@ -5,7 +5,7 @@ metadata:
   namespace: default
 spec:
   dnsNames:
-    - echo.traefik.bobaklabs.com
+    - echo.k8s.bobaklabs.com
   secretName: http-echo-certificate
   issuerRef:
     name: letsencrypt-prod
