@@ -1,0 +1,70 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "this.name" . }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      {{ include "this.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{ include "this.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+        - name: {{ include "this.name" . }}
+          image: itzg/minecraft-server:latest
+          tty: true
+          stdin: true
+          ports:
+            - containerPort: 25565
+            - containerPort: 25575
+          env:
+            - name: EULA
+              value: "TRUE"
+            - name: VERSION
+              value: "1.21.5"
+            - name: MEMORY
+              value: "8G"
+            - name: ICON
+              value: "https://i.pinimg.com/236x/a7/7a/15/a77a15cc15d332cfd2bc7f8e9f3db2c2.jpg"
+            - name: SERVER_PORT
+              value: "25565"
+            - name: RCON_PORT
+              value: "25575"
+            - name: ENABLE_RCON
+              value: "true"
+            - name: RCON_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mc-secrets
+                  key: rcon-password
+            - name: ENFORCE_WHITELIST
+              value: "TRUE"
+            - name: WHITELIST
+              valueFrom:
+                secretKeyRef:
+                  name: mc-secrets
+                  key: whitelist 
+            - name: ONLINE_MODE
+              value: "TRUE"
+            - name: MOTD
+              value: "Bobak Labs Vanilla Minecraft Server v1.21.5"
+            - name: VIEW_DISTANCE
+              value: "16"
+            - name: SIMULATION_DISTANCE
+              value: "16"
+            - name: SYNC_CHUNK_WRITES
+              value: "true"
+            - name: MAX_TICK_TIME
+              value: "-1"
+            - name: OVERRIDE_SERVER_PROPERTIES
+              value: "true"
+          volumeMounts:
+            - mountPath: /data
+              name: mc-data
+      volumes:
+        - name: mc-data
+          persistentVolumeClaim:
+            claimName: {{ include "this.name" . }}

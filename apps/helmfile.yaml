@@ -6,3 +6,11 @@ releases:
   - name: http-echo
     namespace: default
     chart: ./charts/http-echo
+
+  - name: mc-rlcraft-0
+    namespace: minecraft
+    chart: ./charts/mc-rlcraft-0
+
+  - name: mc-vanilla-0
+    namespace: minecraft
+    chart: ./charts/mc-vanilla-0
